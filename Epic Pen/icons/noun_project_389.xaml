@@ -1,0 +1,8 @@
+﻿<Window x:Class="Epic_Pen.icons.noun_project_389"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="noun_project_389" Height="300" Width="300">
+    <Grid>
+        
+    </Grid>
+</Window>
