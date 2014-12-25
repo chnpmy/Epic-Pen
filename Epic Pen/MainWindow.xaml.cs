@@ -96,16 +96,23 @@ namespace Epic_Pen
             _4=0x34,
             _5=0x35,
             _6=0x36,
+            _PageUp=0x21,
+            _PageDown=0x22,
         }
 
         private void SetupHotKey(IntPtr handle)
         {
+            //下面是注册热键的函数，其中的“2”表示Ctrl键
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._1);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._2);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._3);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._4);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._5);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._6);
+
+            //以下两个键不需要Ctrl了
+            RegisterHotKey(handle, GetType().GetHashCode(), 0, (int) hotkeys._PageUp);
+            RegisterHotKey(handle, GetType().GetHashCode(), 0, (int)hotkeys._PageDown);
         }
 
         
@@ -144,6 +151,18 @@ namespace Epic_Pen
                 }
                 else if (key == hotkeys._6)
                     toolsWindow.eraseAllButton_Click(new object(), new RoutedEventArgs());
+                    /*
+                else if (key == hotkeys._PageUp)
+                {
+                    toolsWindow.hideInkCheckBox.IsChecked = !toolsWindow.hideInkCheckBox.IsChecked;
+                    ClickThrough = true;
+                }
+                else if (key == hotkeys._PageDown)
+                {
+                    toolsWindow.hideInkCheckBox.IsChecked = !toolsWindow.hideInkCheckBox.IsChecked;
+                    ClickThrough = true;
+                }
+                     * */
             }
         }
 
