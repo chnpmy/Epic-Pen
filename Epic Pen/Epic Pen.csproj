@@ -112,6 +112,7 @@
     <Compile Include="toolsWindow.xaml.cs">
       <DependentUpon>toolsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="util\TimeStamp.cs" />
     <Page Include="AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

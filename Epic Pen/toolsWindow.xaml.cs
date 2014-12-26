@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Epic_Pen.util;
 
 namespace Epic_Pen
 {
@@ -31,7 +32,7 @@ namespace Epic_Pen
 
 
 
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        public void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
             selectedColourBorder.Background = ((Border)sender).Background;
             inkCanvas.DefaultDrawingAttributes.Color = ((SolidColorBrush)((Border)sender).Background).Color;
@@ -178,6 +179,13 @@ namespace Epic_Pen
             Height = ActualHeight;
             SizeToContent = System.Windows.SizeToContent.Manual;
             defaultButtonStyle = eraseAllButton.Style;
+
+            /**
+             * 设置默认的画笔为红色
+             */
+            Border border = new Border();
+            border.Background = Brushes.Red;
+            Border_MouseDown(border, new MouseButtonEventArgs(InputManager.Current.PrimaryMouseDevice, TimeStamp.Current, MouseButton.Left));
         }
 
     }

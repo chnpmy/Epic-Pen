@@ -36,6 +36,7 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.IO;
+using Epic_Pen.util;
 
 namespace Epic_Pen
 {
@@ -98,6 +99,9 @@ namespace Epic_Pen
             _6=0x36,
             _PageUp=0x21,
             _PageDown=0x22,
+            _R=0x52,
+            _G=0x47,
+            _B=0x42,
         }
 
         private void SetupHotKey(IntPtr handle)
@@ -110,9 +114,15 @@ namespace Epic_Pen
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._5);
             RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._6);
 
+            RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._R);
+            RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._G);
+            RegisterHotKey(handle, GetType().GetHashCode(), 2, (int)hotkeys._B);
+
             //以下两个键不需要Ctrl了
+            /*
             RegisterHotKey(handle, GetType().GetHashCode(), 0, (int) hotkeys._PageUp);
             RegisterHotKey(handle, GetType().GetHashCode(), 0, (int)hotkeys._PageDown);
+             * */
         }
 
         
@@ -151,6 +161,24 @@ namespace Epic_Pen
                 }
                 else if (key == hotkeys._6)
                     toolsWindow.eraseAllButton_Click(new object(), new RoutedEventArgs());
+                else if (key == hotkeys._R)
+                {
+                    Border border = new Border();
+                    border.Background = Brushes.Red;
+                    toolsWindow.Border_MouseDown(border, new MouseButtonEventArgs(InputManager.Current.PrimaryMouseDevice, TimeStamp.Current, MouseButton.Left));
+                }
+                else if (key == hotkeys._G)
+                {
+                    Border border = new Border();
+                    border.Background = Brushes.Green;
+                    toolsWindow.Border_MouseDown(border, new MouseButtonEventArgs(InputManager.Current.PrimaryMouseDevice, TimeStamp.Current, MouseButton.Left));
+                }
+                else if (key == hotkeys._B)
+                {
+                    Border border = new Border();
+                    border.Background = Brushes.Blue;
+                    toolsWindow.Border_MouseDown(border, new MouseButtonEventArgs(InputManager.Current.PrimaryMouseDevice, TimeStamp.Current, MouseButton.Left));
+                }
                     /*
                 else if (key == hotkeys._PageUp)
                 {
@@ -164,6 +192,16 @@ namespace Epic_Pen
                 }
                      * */
             }
+        }
+
+        /**
+         * 得到当前时间相对于1970/1/1的时间戳，以秒为单位，可保证在公元2038年前不会溢出
+         */
+        private int getCurrentTimeStamp()
+        {
+            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
+            TimeSpan delta = DateTime.Now.Subtract(startTime);
+            return Convert.ToInt32(Math.Round(delta.TotalSeconds, MidpointRounding.AwayFromZero));
         }
 
         public const int WS_EX_TRANSPARENT = 0x00000020;
