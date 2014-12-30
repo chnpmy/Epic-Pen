@@ -435,6 +435,11 @@
                                         </Canvas>
                                     </Viewbox>
                                 </Button>
+                                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" Name="ArrowButton" Click="ArrowButton_OnClick">
+                                    <Viewbox Height="25" Width="25">
+                                        
+                                    </Viewbox>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                         <DockPanel.Background>

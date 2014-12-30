@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -12,6 +14,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Epic_Pen.util;
+using Brushes = System.Windows.Media.Brushes;
+using DashStyle = System.Drawing.Drawing2D.DashStyle;
+using Pen = System.Drawing.Pen;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace Epic_Pen
 {
@@ -188,5 +194,25 @@ namespace Epic_Pen
             Border_MouseDown(border, new MouseButtonEventArgs(InputManager.Current.PrimaryMouseDevice, TimeStamp.Current, MouseButton.Left));
         }
 
+        /**
+         * 绘制一个箭头，记着用完dispose掉
+         */
+        public Pen ArrowPen()
+        {
+            Pen arrawPen = new Pen(System.Drawing.Brushes.Red);
+            arrawPen.DashStyle = DashStyle.Dash;
+            arrawPen.EndCap = LineCap.ArrowAnchor;
+            return arrawPen;
+        }
+
+        private void ArrowButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            inkCanvas.Cursor = Cursors.ScrollAll;
+            inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
+            inkCanvas.DefaultDrawingAttributes.IsHighlighter = false;
+            setBrushSize();
+            resetAllToolBackgrounds();
+            ArrowButton.Style = (Style)FindResource("highlightedButtonStyle");
+        }
     }
 }
