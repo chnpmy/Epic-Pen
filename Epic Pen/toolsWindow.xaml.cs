@@ -105,7 +105,27 @@ namespace Epic_Pen
             resetAllToolBackgrounds();
             eraserButton.Style = (Style)FindResource("highlightedButtonStyle");   
         }
-        
+
+
+        private void TextButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            //添加第一个文本框
+            TextBox tb1 = new TextBox();
+            tb1.Name = "ProjectTB";
+
+            tb1.Text = "第一个文本框";
+            tb1.Width = 100;
+            tb1.Height = 30;
+
+            tb1.HorizontalAlignment = HorizontalAlignment.Left;
+            tb1.VerticalAlignment = VerticalAlignment.Top;
+            tb1.Margin = new Thickness(100, 100, 0, 0);
+
+           TextAddedPlace.Children.Add(tb1);
+
+        }
+
+
         public void eraseAllButton_Click(object sender, RoutedEventArgs e)
         {
             inkCanvas.Strokes.Clear();
