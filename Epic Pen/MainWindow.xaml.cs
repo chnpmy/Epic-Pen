@@ -45,6 +45,9 @@ namespace Epic_Pen
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        System.Windows.Point mouseDownPos, mousePos;
+        
         public string AssemblyTitle
        {
            get
@@ -125,8 +128,31 @@ namespace Epic_Pen
              * */
         }
 
-        
 
+        private void CanvasMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (toolsWindow.mode_text == 0)
+                return;
+            mouseDownPos = e.GetPosition(inkCanvas);
+        }
+
+        private void CanvasMouseUp(object sender, MouseEventArgs e)
+        {
+            if (toolsWindow.mode_text == 0)
+                return;
+            TextBox myTextBox = new TextBox();
+            inkCanvas.Children.Add(myTextBox);
+            myTextBox.Visibility = Visibility.Visible;
+            mousePos = e.GetPosition(inkCanvas);
+            double left = Math.Min(mouseDownPos.X, mousePos.X);
+            double top = Math.Min(mouseDownPos.Y, mousePos.Y);
+            myTextBox.Width = Math.Abs(mouseDownPos.X - mousePos.X);
+            myTextBox.Height = Math.Abs(mouseDownPos.Y - mousePos.Y);
+            InkCanvas.SetLeft(myTextBox, left);
+            InkCanvas.SetTop(myTextBox, top);
+            mouseDownPos = mousePos;
+            toolsWindow.TextBoxList.Add(myTextBox);
+        }  
         void ComponentDispatcher_ThreadPreprocessMessage(ref MSG msg, ref bool handled)
         {
 
@@ -305,6 +331,7 @@ namespace Epic_Pen
             inkCanvas.DefaultDrawingAttributes.IgnorePressure = false;
 
             toolsWindow.setInkCanvas(inkCanvas);
+            toolsWindow.setScrollViewer(TextPart);
             toolsWindow.Owner = this;
             toolsWindow.CloseButtonClick += new EventHandler(toolsWindow_CloseButtonClick);
 
